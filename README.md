@@ -223,8 +223,8 @@ data_demo/mofllama/retrieval_store/embedding/
 Required checkpoints:
 
 ```
-checkpoint/MOFLLaMA/
-checkpoint/instructor_xl/
+checkpoints/MOFLLaMA/
+checkpoints/instructor_xl/
 ```
 
 ---
@@ -254,8 +254,8 @@ hmof-9.pt
 Required checkpoints:
 
 ```
-checkpoint/MOFLLaMA/
-checkpoint/finetune_result.pt
+checkpoints/MOFLLaMA/
+checkpoints/finetune_result.pt
 ```
 
 ---
