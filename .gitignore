@@ -1,0 +1,117 @@
+# =========================================================
+# Python cache and bytecode
+# =========================================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# =========================================================
+# Jupyter / IDE / editor
+# =========================================================
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# =========================================================
+# Operating system files
+# =========================================================
+.DS_Store
+Thumbs.db
+
+# =========================================================
+# Logs
+# =========================================================
+logs/
+*.log
+output_*.log
+error_*.log
+
+# =========================================================
+# Temporary files
+# =========================================================
+tmp/
+temp/
+*.tmp
+
+# =========================================================
+# Formal checkpoints from Zenodo (not tracked)
+# Keep only placeholders / documentation
+# =========================================================
+checkpoints/*
+!checkpoints/.gitkeep
+!checkpoints/README.md
+
+# =========================================================
+# Formal data from Zenodo (not tracked)
+# Keep only placeholders / documentation
+# =========================================================
+data/*
+!data/.gitkeep
+!data/README.md
+
+# =========================================================
+# Training / experiment outputs
+# =========================================================
+outputs/
+results/
+
+# Demo result folders: keep directory structure, ignore generated contents
+results_demo/mofllama/*
+results_demo/mofmeld/*
+!results_demo/
+!results_demo/mofllama/
+!results_demo/mofmeld/
+!results_demo/mofllama/.gitkeep
+!results_demo/mofmeld/.gitkeep
+
+# =========================================================
+# Large binary artifacts
+# =========================================================
+*.ckpt
+*.pth
+*.pt
+*.bin
+*.safetensors
+*.onnx
+*.npy
+*.npz
+*.h5
+*.pkl
+*.faiss
+
+# =========================================================
+# CSV / JSONL outputs from experiments
+# =========================================================
+*.csv
+*.jsonl
+
+# =========================================================
+# Keep repository-level metadata and source code
+# =========================================================
+!README.md
+!LICENSE
+!CITATION.cff
+!docs/**
+!configs/**
+!src/**
+!scripts/**
+
+# =========================================================
+# Keep demo assets tracked on GitHub
+# =========================================================
+!data_demo/
+!data_demo/mofmeld/
+!data_demo/mofmeld/sample_cifs/**
+!data_demo/mofmeld/sample_embeddings/*.pt
+!data_demo/mofllama/
+!data_demo/mofllama/metadata/**
+!data_demo/mofllama/retrieval_store/**
+!data_demo/mofllama/**/*.csv
+!data_demo/mofllama/**/*.json
+!data_demo/mofllama/**/*.jsonl
+
+# =========================================================
+# Optional project metadata placeholders
+# =========================================================
+!.gitignore
