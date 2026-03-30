@@ -265,7 +265,7 @@ checkpoints/finetune_result.pt
 ### Checkpoints
 
 ```
-checkpoint/
+checkpoints/
 ├── MOFLLaMA/
 ├── pretrain_result.pt
 ├── finetune_result.pt
@@ -306,7 +306,7 @@ data/
 See:
 
 ```
-checkpoint/readme.md
+checkpoints/readme.md
 data/readme.md
 ```
 
