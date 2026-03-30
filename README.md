@@ -15,7 +15,7 @@ Large datasets, trained checkpoints, retrieval stores, and archived result files
 
 This repository follows the following release policy:
 
-- **Training code**: fully released to preserve the original experimental workflow, but **not packaged as lightweight demo training**
+- **Training code**: fully released to preserve the original experimental workflow
 - **Inference code**: two runnable demos are provided  
   - one for **MOFLLaMA + KG-assisted retrieval**  
   - one for **MOFMeld structure-aware property prediction**
@@ -138,8 +138,6 @@ MOFMeld is a structure-language fusion framework that combines:
 
 It supports:
 
-- structure-text pretraining  
-- structure-conditioned question answering  
 - property prediction for MOF structural and adsorption properties  
 
 #### Main code
@@ -262,74 +260,15 @@ checkpoint/mofmeld_bridge_finetuned.pt
 
 ---
 
-## Training workflows
-
-MOFLLaMA training
-
-```bash
-bash scripts/train_mofllama.sh
-```
-
-MOFMeld stage-I pretraining
-
-```bash
-bash scripts/pretrain_mofmeld_bridge.sh
-```
-
-MOFMeld stage-II fine-tuning
-
-```bash
-bash scripts/finetune_mofmeld_bridge.sh
-```
-
-CHGNet baseline training
-
-```bash
-bash scripts/train_chgnet_baseline.sh pld
-bash scripts/train_chgnet_baseline.sh lcd
-bash scripts/train_chgnet_baseline.sh surface_area
-bash scripts/train_chgnet_baseline.sh void_fraction
-bash scripts/train_chgnet_baseline.sh co2_0p01bar
-bash scripts/train_chgnet_baseline.sh co2_2p5bar
-```
-
-CHGNet prediction evaluation
-
-```bash
-bash scripts/evaluate_chgnet_prediction.sh <pred_csv> <mof_list_csv> <out_csv>
-```
-
----
-
-## Data and checkpoints
-
-### GitHub contains
-
-- code  
-- documentation  
-- small demo assets  
-- demo launch scripts  
-
-### Zenodo contains
-
-- processed datasets  
-- trained checkpoints  
-- retrieval stores  
-- structure embeddings  
-- archived prediction outputs  
-- external validation files  
-
----
-
 ## Expected local layout after downloading Zenodo assets
 
 ### Checkpoints
 
 ```
 checkpoint/
-├── mofllama_sft/
-├── mofmeld_bridge_pretrained.pt
-├── mofmeld_bridge_finetuned.pt
+├── MOFLLaMA/
+├── pretrain_result.pt
+├── finetune_result.pt
 └── instructor_xl/
 ```
 
