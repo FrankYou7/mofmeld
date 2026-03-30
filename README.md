@@ -39,7 +39,7 @@ This repository follows the following release policy:
 MOFMELD/
 ├── README.md
 ├── .gitignore
-├── checkpoint/
+├── checkpoints/
 │   └── readme.md
 ├── data/
 │   └── readme.md
@@ -257,6 +257,7 @@ Required checkpoints:
 checkpoints/MOFLLaMA/
 checkpoints/finetune_result.pt
 ```
+This demo uses precomputed structure embeddings stored in `data_demo/mofmeld/sample_embeddings/`.
 
 ---
 
