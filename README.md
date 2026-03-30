@@ -15,20 +15,20 @@ Large datasets, trained checkpoints, retrieval stores, and archived result files
 
 This repository follows the following release policy:
 
-- **Training code**: fully released to preserve the original experimental workflow, but **not packaged as lightweight demo training**.
-- **Inference code**: two runnable demos are provided:
-  - one for **MOFLLaMA + KG-assisted retrieval**
+- **Training code**: fully released to preserve the original experimental workflow, but **not packaged as lightweight demo training**
+- **Inference code**: two runnable demos are provided  
+  - one for **MOFLLaMA + KG-assisted retrieval**  
   - one for **MOFMeld structure-aware property prediction**
-- **GitHub** stores:
-  - source code
-  - documentation
-  - small demo assets
+- **GitHub** stores  
+  - source code  
+  - documentation  
+  - small demo assets  
   - runnable demo scripts
-- **Zenodo** stores:
-  - processed datasets
-  - trained checkpoints
-  - retrieval indices
-  - structure embeddings
+- **Zenodo** stores  
+  - processed datasets  
+  - trained checkpoints  
+  - retrieval indices  
+  - structure embeddings  
   - archived prediction/evaluation files
 
 ---
@@ -36,34 +36,62 @@ This repository follows the following release policy:
 ## Project structure
 
 ```text
-mofmeld/
+MOFMELD/
 ├── README.md
-├── LICENSE
 ├── .gitignore
-├── requirements.txt
-├── environment.yml
-├── docs/
-├── configs/
-├── src/
-│   ├── common/
-│   ├── mofllama/
-│   ├── mofmeld/
-│   └── baselines/
-├── scripts/
-│   ├── train_mofllama.sh
-│   ├── run_mofllama_demo.sh
-│   ├── extract_chgnet_embeddings.sh
-│   ├── pretrain_mofmeld_bridge.sh
-│   ├── finetune_mofmeld_bridge.sh
-│   ├── run_mofmeld_demo.sh
-│   └── slurm/
+├── checkpoint/
+│   └── readme.md
+├── data/
+│   └── readme.md
 ├── data_demo/
 │   ├── mofllama/
+│   │   ├── metadata/
+│   │   │   └── citations_metadata.csv
+│   │   └── retrieval_store/
+│   │       └── embedding/
+│   │           ├── index.faiss
+│   │           └── index.pkl
 │   └── mofmeld/
-├── results_demo/
-├── checkpoints/
-└── data/
+│       ├── sample_cifs/
+│       └── sample_embeddings/
+├── scripts/
+│   ├── evaluate_chgnet_prediction.sh
+│   ├── extract_chgnet_embeddings.sh
+│   ├── finetune_mofmeld_bridge.sh
+│   ├── pretrain_mofmeld_bridge.sh
+│   ├── run_mofllama_demo.sh
+│   ├── run_mofmeld_demo.sh
+│   ├── train_chgnet_baseline.sh
+│   └── train_mofllama.sh
+└── src/
+    ├── baselines/
+    │   └── chgnet/
+    │       ├── evaluate_prediction.py
+    │       └── train_chgnet_baseline.py
+    ├── mofllama/
+    │   ├── inference/
+    │   │   └── run_kg_grounded_inference_demo.py
+    │   ├── retrieval/
+    │   │   └── build_faiss_index.py
+    │   └── training/
+    │       └── train_mofllama.py
+    └── mofmeld/
+        ├── data/
+        ├── embeddings/
+        │   └── extract_chgnet_embeddings.py
+        ├── evaluation/
+        │   └── evaluate_metrics.py
+        ├── inference/
+        │   ├── run_property_prediction.py
+        │   └── run_property_prediction_demo.py
+        ├── models/
+        │   └── mof_bridge.py
+        └── training/
+            ├── finetune_ddp.py
+            └── pretrain_bridge.py
 ```
+
+---
 
 ## Components
 
@@ -73,9 +101,9 @@ MOFLLaMA is a MOF-specialized LLM trained on literature-derived MOF QA data.
 
 It supports:
 
-- supervised fine-tuning on MOF QA data
-- evaluation on held-out QA and MCQ benchmarks
-- retrieval-assisted inference using MOFLLaMA-KG resources
+- supervised fine-tuning on MOF QA data  
+- evaluation on held-out QA and MCQ benchmarks  
+- retrieval-assisted inference using MOFLLaMA-KG resources  
 
 #### Main code
 
@@ -88,16 +116,10 @@ Interactive demo for MOFLLaMA + KG-grounded retrieval and answering.
 `src/mofllama/retrieval/build_faiss_index.py`  
 Utility for building the retrieval index used in MOFLLaMA-KG.
 
-`src/mofllama/kg/build_citation_metadata.py`  
-Utility for preparing citation metadata for retrieved references.
-
 #### Main scripts
 
 `scripts/train_mofllama.sh`  
 Full MOFLLaMA training workflow.
-
-`scripts/slurm/train_mofllama.slurm`  
-Example Slurm submission script for HPC training.
 
 `scripts/run_mofllama_demo.sh`  
 Interactive demo launcher for MOFLLaMA + KG retrieval.
@@ -108,17 +130,17 @@ Interactive demo launcher for MOFLLaMA + KG retrieval.
 
 MOFMeld is a structure-language fusion framework that combines:
 
-- a frozen MOFLLaMA backbone
-- CHGNet-derived 64-dimensional structure embeddings
+- a frozen MOFLLaMA backbone  
+- CHGNet-derived 64-dimensional structure embeddings  
 - a bridge module trained in two stages  
   - stage-I pretraining  
-  - stage-II fine-tuning
+  - stage-II fine-tuning  
 
 It supports:
 
-- structure-text pretraining
-- structure-conditioned question answering
-- property prediction for MOF structural and adsorption properties
+- structure-text pretraining  
+- structure-conditioned question answering  
+- property prediction for MOF structural and adsorption properties  
 
 #### Main code
 
@@ -128,29 +150,20 @@ Unified MOFMeld bridge / multimodal model definition.
 `src/mofmeld/embeddings/extract_chgnet_embeddings.py`  
 Extracts 64-dimensional structure embeddings from CIF files using CHGNet.
 
-`src/mofmeld/data/build_pretrain_tasks.py`  
-Builds stage-I pretraining task files.
-
-`src/mofmeld/data/pretrain_dataset.py`  
-Dataset utilities for stage-I pretraining.
-
 `src/mofmeld/training/pretrain_bridge.py`  
 Stage-I pretraining script for the bridge module.
 
-`src/mofmeld/data/build_finetune_tasks.py`  
-Builds stage-II QA-style fine-tuning data.
-
-`src/mofmeld/data/finetune_dataset.py`  
-Dataset utilities for stage-II fine-tuning.
-
-`src/mofmeld/training/finetune_bridge_ddp.py`  
+`src/mofmeld/training/finetune_ddp.py`  
 Stage-II distributed fine-tuning script.
+
+`src/mofmeld/inference/run_property_prediction.py`  
+Property prediction script for MOFMeld.
 
 `src/mofmeld/inference/run_property_prediction_demo.py`  
 Interactive MOFMeld demo for structure-aware property prediction.
 
-`src/mofmeld/evaluation/evaluate_property_predictions.py`  
-Evaluation utilities for prediction outputs.
+`src/mofmeld/evaluation/evaluate_metrics.py`  
+Evaluation script for MAD, R2, and RMSE.
 
 #### Main scripts
 
@@ -175,24 +188,26 @@ This repository also includes baseline support code for CHGNet-based property pr
 #### Main code
 
 `src/baselines/chgnet/train_chgnet_baseline.py`  
-`src/baselines/chgnet/run_chgnet_inference.py`  
-`src/baselines/chgnet/evaluate_chgnet_predictions.py`
+Training script for CHGNet baseline models across the six target properties.
 
-These scripts correspond to the baseline checkpoints and prediction outputs archived on Zenodo.
+`src/baselines/chgnet/evaluate_prediction.py`  
+Subset filtering and evaluation script for CHGNet prediction CSV files.
+
+#### Main scripts
+
+`scripts/train_chgnet_baseline.sh`  
+Launcher for CHGNet baseline training.
+
+`scripts/evaluate_chgnet_prediction.sh`  
+Launcher for CHGNet prediction filtering and evaluation.
 
 ---
 
-# Demo workflows
+## Demo workflows
 
 This repository provides two runnable demo inference workflows.
 
----
-
-## A. MOFLLaMA + KG demo
-
-This demo allows the user to enter a natural-language question in the terminal.
-
-The system retrieves relevant context from a small demo FAISS store, generates an answer using MOFLLaMA, and prints the corresponding literature references.
+### A. MOFLLaMA + KG demo
 
 Run:
 
@@ -200,31 +215,23 @@ Run:
 bash scripts/run_mofllama_demo.sh
 ```
 
-### Required demo assets
-
-GitHub includes small demo retrieval assets under:
+Required demo assets:
 
 ```
-data_demo/mofllama/retrieval_store/faiss_demo/
-data_demo/mofllama/metadata/citations_demo.csv
+data_demo/mofllama/metadata/citations_metadata.csv
+data_demo/mofllama/retrieval_store/embedding/
 ```
 
-You must also place the required checkpoints under:
+Required checkpoints:
 
 ```
-checkpoints/mofllama_sft/
-checkpoints/instructor_xl/
+checkpoint/mofllama_sft/
+checkpoint/instructor_xl/
 ```
 
 ---
 
-## B. MOFMeld demo
-
-This demo allows the user to:
-
-- enter the name of a demo MOF structure (for example `hmof-9`)
-- enter a natural-language property question
-- obtain a generated answer and the inference time for that single sample.
+### B. MOFMeld demo
 
 Run:
 
@@ -232,80 +239,78 @@ Run:
 bash scripts/run_mofmeld_demo.sh
 ```
 
-### Required demo assets
-
-GitHub includes small demo structure files under:
+Required demo assets:
 
 ```
 data_demo/mofmeld/sample_cifs/
 data_demo/mofmeld/sample_embeddings/
 ```
 
-The CIF filename and embedding filename must share the same stem, for example:
+Example file pair:
 
 ```
 hmof-9.cif
 hmof-9.pt
 ```
 
-You must also place the required checkpoints under:
+Required checkpoints:
 
 ```
-checkpoints/mofllama_sft/
-checkpoints/mofmeld_bridge_finetuned.pt
+checkpoint/mofllama_sft/
+checkpoint/mofmeld_bridge_finetuned.pt
 ```
 
 ---
 
-# Training workflows
+## Training workflows
 
-Training code is fully released to document the original workflow used in the study.
-
-### MOFLLaMA training
+MOFLLaMA training
 
 ```bash
 bash scripts/train_mofllama.sh
 ```
 
-### MOFMeld stage-I pretraining
+MOFMeld stage-I pretraining
 
 ```bash
 bash scripts/pretrain_mofmeld_bridge.sh
 ```
 
-### MOFMeld stage-II fine-tuning
+MOFMeld stage-II fine-tuning
 
 ```bash
 bash scripts/finetune_mofmeld_bridge.sh
 ```
 
-### CHGNet baseline preprocessing / training
+CHGNet baseline training
 
-See the scripts under:
-
+```bash
+bash scripts/train_chgnet_baseline.sh pld
+bash scripts/train_chgnet_baseline.sh lcd
+bash scripts/train_chgnet_baseline.sh surface_area
+bash scripts/train_chgnet_baseline.sh void_fraction
+bash scripts/train_chgnet_baseline.sh co2_0p01bar
+bash scripts/train_chgnet_baseline.sh co2_2p5bar
 ```
-src/baselines/chgnet/
-src/mofmeld/embeddings/
-```
 
-These scripts are intended for full reproduction rather than lightweight demo execution.
+CHGNet prediction evaluation
+
+```bash
+bash scripts/evaluate_chgnet_prediction.sh <pred_csv> <mof_list_csv> <out_csv>
+```
 
 ---
 
-# Data and checkpoints
+## Data and checkpoints
 
-## GitHub
-
-This repository contains:
+### GitHub contains
 
 - code  
 - documentation  
 - small demo assets  
 - demo launch scripts  
 
-## Zenodo
-
-Zenodo contains the larger reproducibility assets:
+### Zenodo contains
 
 - processed datasets  
 - trained checkpoints  
@@ -316,14 +321,12 @@ Zenodo contains the larger reproducibility assets:
 
 ---
 
-# Expected local layout after downloading Zenodo assets
-
-Place downloaded assets under the following repository-relative paths.
+## Expected local layout after downloading Zenodo assets
 
 ### Checkpoints
 
 ```
-checkpoints/
+checkpoint/
 ├── mofllama_sft/
 ├── mofmeld_bridge_pretrained.pt
 ├── mofmeld_bridge_finetuned.pt
@@ -334,79 +337,38 @@ checkpoints/
 
 ```
 data/
+├── chgnet_hmof/
+│   ├── labels.json
+│   ├── train/cifs/
+│   ├── val/cifs/
+│   └── test/cifs/
 ├── mofllama/
-│   ├── train_dataset_llama3_format_only.jsonl
-│   └── ...
+│   ├── mofllama_train_dataset.jsonl
+│   ├── qa_test.jsonl
+│   ├── easy_mcq.jsonl
+│   ├── hard_mcq.jsonl
+│   └── kg/
+│       ├── mofllama_kg_triples.jsonl
+│       └── citations_metadata.csv
 ├── mofmeld_pretrain/
 │   ├── prediction.jsonl
 │   ├── correlation.jsonl
 │   └── association.jsonl
-├── mofmeld/
+├── mofmeld_finetune/
 │   └── finetune_qa.jsonl
-└── embeddings/
-    ├── qmof_embeddings/
-    └── qmof_hmof_embeddings/
+├── mofmeld_metadata/
+│   ├── train_hmof_30000.txt
+│   └── test_hmof_2769.txt
+└── coremof/
+    ├── coremof_4props.csv
+    └── coremof_co2max_top50.csv
 ```
 
 See:
 
 ```
-checkpoints/README.md
-data/README.md
+checkpoint/readme.md
+data/readme.md
 ```
 
 for more detailed placement instructions.
-
----
-
-# Environment
-
-This project depends on:
-
-- Python
-- PyTorch
-- Transformers
-- CHGNet
-- pymatgen
-- sentence-transformers
-- FAISS
-
-Install dependencies using:
-
-```bash
-pip install -r requirements.txt
-```
-
-or
-
-```bash
-conda env create -f environment.yml
-```
-
-Depending on your environment and hardware, additional CUDA-compatible packages may be required.
-
----
-
-# Notes on released assets
-
-This repository is intended to preserve the original workflow used in the study while replacing machine-specific absolute paths with portable repository-relative paths.
-
-- Original publisher-provided full-text articles are not redistributed here.
-- Large checkpoints, retrieval indices, and processed datasets are stored on Zenodo rather than GitHub.
-- Demo-scale assets are included only where needed for runnable inference examples.
-
----
-
-# Citation
-
-If you use this repository or the archived assets, please cite the associated manuscript and Zenodo release.
-
-(Replace this section with the exact manuscript citation and Zenodo DOI.)
-
----
-
-# License
-
-Please see the `LICENSE` file for code usage terms.
-
-Dataset and model redistribution may be subject to the licenses and terms associated with the original sources and base models.
