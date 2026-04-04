@@ -247,6 +247,12 @@ checkpoints/MOFLLaMA/
 checkpoints/instructor_xl/
 ```
 
+The `instructor_xl/` directory should be downloaded separately from the Hugging Face model **hkunlp/instructor-xl** and placed under:
+
+```text
+checkpoints/instructor_xl/
+```
+
 ---
 
 ### B. MOFMeld demo
