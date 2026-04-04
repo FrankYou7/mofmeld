@@ -205,6 +205,26 @@ Launcher for CHGNet prediction filtering and evaluation.
 
 This repository provides two runnable demo inference workflows.
 
+### Quick Start
+
+#### Environment Setup
+
+The released demos were tested under a unified Python environment.
+
+Example setup:
+
+```bash
+conda create -n mofmeld_demo python=3.10 -y
+conda activate mofmeld_demo
+
+pip install "numpy<2"
+pip install torch transformers sentence-transformers pandas \
+    langchain langchain-community faiss-gpu accelerate \
+    pymatgen chgnet
+```
+
+For the released demos, we recommend using numpy<2 for compatibility with FAISS.
+
 ### A. MOFLLaMA + KG demo
 
 Run:
