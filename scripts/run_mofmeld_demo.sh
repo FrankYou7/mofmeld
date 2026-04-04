@@ -37,7 +37,7 @@ echo "Max length      : ${MAX_LENGTH}"
 echo "Max new tokens  : ${MAX_NEW_TOKENS}"
 echo "=================================================="
 
-python -m src/mofmeld/inference/run_property_prediction_demo.py \
+python -m src.mofmeld.inference.run_property_prediction_demo \
   --llama_path "${LLAMA_PATH}" \
   --bridge_ckpt "${BRIDGE_CKPT}" \
   --cif_dir "${CIF_DIR}" \
