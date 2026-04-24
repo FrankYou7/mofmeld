@@ -2,12 +2,24 @@
 
 MOFMeld is a MOF-oriented language and multimodal modeling project for carbon-capture-related reasoning and property prediction.
 
+## Associated publication
+
+This repository accompanies the published article:
+
+**MOFMeld: a structure–language fusion framework for MOF property prediction in carbon capture**  
+Huajie You, Shengde Zhang, Liang Du, Chuxuan Zeng, Teng Zhou & Xiaowen Chu  
+*npj Artificial Intelligence* **2**, Article number: 47 (2026)  
+DOI: https://doi.org/10.1038/s44387-026-00106-1
+
 This repository contains the **released codebase**, documentation, and **runnable demo inference workflows** for two complementary components:
 
 - **MOFLLaMA**: a literature-specialized large language model fine-tuned for MOF question answering, benchmark evaluation, and retrieval-assisted inference.
 - **MOFMeld**: a structure-language fusion framework that integrates CHGNet-derived structure embeddings with a frozen MOFLLaMA backbone through a bridge module for structure-aware reasoning and MOF property prediction.
 
 Large datasets, trained checkpoints, retrieval stores, and archived result files are hosted separately on **Zenodo**.
+DOI: https://doi.org/10.5281/zenodo.19315218
+
+Please cite both the paper and the Zenodo archive if you use this repository or the released assets.
 
 ---
 
